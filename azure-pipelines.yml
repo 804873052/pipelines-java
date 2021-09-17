@@ -5,28 +5,29 @@
 
 trigger:
 - master
+- releases/*
 
 
-# strategy:
-#   matrix:
-#     linux:
-#       imageName: ubuntu-latest
-#     mac:
-#       imageName: macOS-latest
-#     windows:
-#       imageName: windows-latest
 strategy:
   matrix:
-    jdk8:
-      jdk_version: 1.8
-    jdk11:
-      jdk_version: 1.11
-    jdk17:
-      jdk_version: 1.17
+    linux:
+      imageName: ubuntu-latest
+    mac:
+      imageName: macOS-latest
+    windows:
+      imageName: windows-latest
+# strategy:
+#   matrix:
+#     jdk8:
+#       jdk_version: 1.8
+#     jdk11:
+#       jdk_version: 1.11
+#     jdk17:
+#       jdk_version: 1.17
 
 pool:
-  vmImage: ubuntu-latest
-  # vmImage: $(imageName)
+  # vmImage: ubuntu-latest
+  vmImage: $(imageName)
 
 steps:
 - task: Maven@3
@@ -34,8 +35,8 @@ steps:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
     javaHomeOption: 'JDKVersion'
-    # jdkVersionOption: '1.8'
-    jdkVersionOption: $(jdk_version)
+    jdkVersionOption: '1.8'
+    # jdkVersionOption: $(jdk_version)
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
